@@ -12,7 +12,31 @@ Each machine can act as both:
 
 ---
 
-## 1. Install
+## Download the app (no Python needed)
+
+Prebuilt double-click apps are produced by CI:
+- **Latest build:** the repo's **Actions** tab → newest "Build apps" run →
+  download `DeskBridge-macos.zip` (a `DeskBridge.app`) or `DeskBridge-windows.zip`
+  (a `DeskBridge.exe`).
+- **Releases:** tagged versions (`v*`) attach both zips to a GitHub Release.
+
+The apps are **unsigned**, so the OS shows a one-time warning on first launch:
+- **macOS:** right-click `DeskBridge.app` → **Open** → **Open** again.
+- **Windows:** **More info** → **Run anyway**.
+
+### Build it yourself
+
+```
+cd remote
+pip install pyinstaller
+pyinstaller --noconfirm DeskBridge.spec
+```
+
+Output: `dist/DeskBridge.app` (macOS) or `dist/DeskBridge.exe` (Windows).
+
+---
+
+## 1. Install (from source)
 
 Do this on **both** machines (Mac and Windows). Requires Python 3.10+; no
 third-party runtime dependencies.
