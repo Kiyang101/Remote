@@ -33,6 +33,7 @@ class DeskBridgeApp:
 
         self.listbox = tk.Listbox(root)
         self.listbox.pack(fill="both", expand=True, padx=8, pady=4)
+        self.listbox.bind("<<ListboxSelect>>", self._on_select)
         self._refresh_list()
 
         btns = tk.Frame(root)
@@ -40,6 +41,11 @@ class DeskBridgeApp:
         tk.Button(btns, text="Connect", command=self.connect).pack(side="left")
         tk.Button(btns, text="Add", command=self.add_machine).pack(side="left")
         tk.Button(btns, text="Remove", command=self.remove_machine).pack(side="left")
+        self.quality_var = tk.StringVar(value="Balanced")
+        tk.OptionMenu(
+            btns, self.quality_var, "Fast", "Balanced", "Sharp",
+            command=self._on_quality_change,
+        ).pack(side="left", padx=(8, 0))
         tk.Button(btns, text="Share my screen", command=self.share_screen).pack(side="right")
 
         self.status = tk.Label(root, text="", anchor="w", fg="gray")
@@ -53,6 +59,17 @@ class DeskBridgeApp:
     def _selected(self) -> Connection | None:
         sel = self.listbox.curselection()
         return self.connections[sel[0]] if sel else None
+
+    def _on_select(self, event=None):
+        conn = self._selected()
+        if conn:
+            self.quality_var.set(conn.quality.capitalize())
+
+    def _on_quality_change(self, value):
+        conn = self._selected()
+        if conn:
+            conn.quality = value.lower()
+            save_connections(self.config_path, self.connections)
 
     def connect(self):
         conn = self._selected()
@@ -70,7 +87,7 @@ class DeskBridgeApp:
             )
             self.status.config(text="Unreachable.")
             return
-        launch_viewer(self.os_name, address, conn.port)
+        launch_viewer(self.os_name, address, conn.port, quality=conn.quality)
         self.status.config(text=f"Launched viewer for {conn.name}.")
 
     def add_machine(self):
