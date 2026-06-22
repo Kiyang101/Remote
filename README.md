@@ -75,9 +75,22 @@ On the machine you're sitting at:
    Enter the VNC password you set on the host.
 4. You're now seeing and controlling the other desktop.
 
-**Viewers:** macOS has a built-in viewer (DeskBridge opens `vnc://…`). On
-Windows, install the TigerVNC **viewer** too; if `vncviewer.exe` isn't on your
-PATH, the launch command can be pointed at its full path.
+**Viewers — use TigerVNC for a smooth picture.** macOS's built-in Screen Sharing
+client throttles connections to non-Apple VNC servers (laggy, freeze-then-jump),
+so DeskBridge prefers the **TigerVNC viewer** when it's installed:
+
+- **macOS:** `brew install --cask tigervnc`. DeskBridge auto-detects it and
+  launches it with tuned settings. If it's not installed, DeskBridge falls back
+  to the built-in `vnc://` client (lower quality).
+- **Windows:** install the TigerVNC **viewer**; if `vncviewer.exe` isn't on your
+  PATH, the launch command can be pointed at its full path.
+
+**Quality dropdown.** Pick a preset per machine in the toolbar:
+- **Fast** — smoothest motion, lower image quality (slow links).
+- **Balanced** — the default.
+- **Sharp** — best image, more bandwidth.
+
+The presets also map the remote 1:1, which fixes the cursor-offset issue.
 
 Because both machines can host *and* control, repeat steps 3–4 in the other
 direction to control the first machine.
@@ -132,6 +145,9 @@ not have VNC's cursor-offset issues. Keep the host wired for the lowest latency.
 | `ModuleNotFoundError: deskbridge` | Run `pip install -e .` from the `remote/` folder first. |
 | "Unreachable" on Connect | Host is off / wrong IP / VNC server not started. Re-check step 3. |
 | Viewer doesn't open on Windows | Install the TigerVNC **viewer**; ensure `vncviewer.exe` is on PATH. |
+| Laggy / freeze-then-jump from a Mac | Install TigerVNC viewer (`brew install --cask tigervnc`) so DeskBridge stops using Apple's throttled client; try the **Fast** quality preset. |
+| Mouse cursor offset / clicks land wrong | Use TigerVNC viewer (any quality preset sets `RemoteResize` for 1:1 mapping). |
+| Want true 60 fps / gaming | VNC can't do it — use Moonlight + Sunshine (see the Gaming section). |
 | Can connect but black screen / no control | Re-check the host's VNC password and that "allow control" is enabled. |
 
 ## Run the tests
