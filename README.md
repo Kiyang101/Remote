@@ -108,14 +108,29 @@ check the IP.
 
 ---
 
-## Using it over the internet (v2 — planned)
+## Using it over the internet (Tailscale)
 
-Today DeskBridge works on the **same local network**. To control across the
-internet without exposing VNC to the open web, put both machines on the same
-**Tailscale** network (a free mesh VPN), then add each machine by its Tailscale
-name. The same Connect flow then works anywhere, encrypted end-to-end. Full
-in-app Tailscale support is the next milestone; the address-resolution code
-already has the seam for it.
+DeskBridge can control a machine on a **different network** (across the internet)
+by going over **Tailscale**, a free mesh VPN that handles NAT traversal and
+encrypts traffic end-to-end — no port forwarding, and VNC's weak built-in
+encryption stops mattering.
+
+**One-time setup (both machines):**
+1. Install Tailscale and **log in with the same account** on the Mac and Windows:
+   - macOS: `brew install --cask tailscale` (or https://tailscale.com/download)
+   - Windows: https://tailscale.com/download
+2. Confirm both show up in your tailnet.
+
+**Connecting:**
+1. In DeskBridge, tick **Use Tailscale (internet)**. The list switches to the
+   machines currently on your tailnet (with online/offline marks). The header
+   shows this machine's own Tailscale name/IP.
+2. Select the machine and click **Connect** — it connects to that machine's
+   Tailscale address (`100.x.x.x`) using the same viewer + quality preset.
+
+The host still needs its VNC server running (Screen Sharing / TigerVNC) as in the
+LAN setup. Add/Remove and saved-machine editing apply to LAN mode; tailnet
+machines are read live, so there's nothing to save.
 
 ---
 
