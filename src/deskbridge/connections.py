@@ -12,6 +12,7 @@ class Connection:
     port: int = 5900
     tailscale_name: str | None = None
     notes: str = ""
+    quality: str = "balanced"
 
 
 def default_config_path() -> Path:

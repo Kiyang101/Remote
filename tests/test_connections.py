@@ -22,3 +22,21 @@ def test_defaults():
     assert c.port == 5900
     assert c.tailscale_name is None
     assert c.notes == ""
+
+
+def test_quality_defaults_to_balanced():
+    c = Connection(name="x", host="h")
+    assert c.quality == "balanced"
+
+
+def test_quality_roundtrips_and_tolerates_legacy_json(tmp_path):
+    path = tmp_path / "connections.json"
+    save_connections(path, [Connection(name="A", host="h", quality="fast")])
+    assert load_connections(path)[0].quality == "fast"
+
+    # Legacy entry written before the quality field existed must still load.
+    path.write_text('[{"name": "B", "host": "h2", "port": 5900, '
+                    '"tailscale_name": null, "notes": ""}]')
+    loaded = load_connections(path)
+    assert loaded[0].name == "B"
+    assert loaded[0].quality == "balanced"
