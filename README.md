@@ -20,9 +20,22 @@ Prebuilt double-click apps are produced by CI:
   (a `DeskBridge.exe`).
 - **Releases:** tagged versions (`v*`) attach both zips to a GitHub Release.
 
-The apps are **unsigned**, so the OS shows a one-time warning on first launch:
-- **macOS:** right-click `DeskBridge.app` → **Open** → **Open** again.
-- **Windows:** **More info** → **Run anyway**.
+The apps are **unsigned**, so the OS blocks them on first launch.
+
+**macOS** (it says *"Apple could not verify … DeskBridge is free of malware"*):
+- Easiest/most reliable — clear the download quarantine flag in Terminal, then open:
+  ```
+  xattr -dr com.apple.quarantine /path/to/DeskBridge.app
+  open /path/to/DeskBridge.app
+  ```
+- Or via the GUI: **System Settings → Privacy & Security**, scroll to Security,
+  and click **Open Anyway** next to the DeskBridge message. (On recent macOS the
+  old right-click → Open option may not appear — use one of the above.)
+
+**Windows** (SmartScreen): **More info → Run anyway**.
+
+> The only way to remove this prompt entirely is paid code signing + notarization
+> (Apple Developer ID / a Windows cert), which is out of scope here.
 
 ### Build it yourself
 
