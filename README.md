@@ -32,8 +32,10 @@ deskbridge
 
 (or `python -m deskbridge.app`)
 
-A small window opens showing **"This machine: macos"** (or **windows**), a list
-of saved machines, and the buttons **Connect · Add · Remove · Share my screen**.
+A small window opens showing **"This machine: macos · IP: 192.168.1.x"** (or
+**windows**) — that IP is this machine's LAN address, which you hand to the other
+machine when sharing your screen. Below it are a list of saved machines and the
+buttons **Connect · Add · Remove · Share my screen**.
 
 ---
 
@@ -52,7 +54,9 @@ Do this once on whichever machine will be controlled. In the app, click
 1. Install **TigerVNC** for Windows (https://tigervnc.org) and run the installer.
 2. Start **TigerVNC Server** and set a connection password.
 3. Allow it through Windows Firewall on the private network when prompted.
-4. Find the PC's IP by running `ipconfig` in a terminal.
+
+> Tip: the IP to give the other machine is shown in DeskBridge's header and at
+> the top of the **Share my screen** dialog — no need to run `ipconfig`.
 
 > DeskBridge never changes these OS security settings for you — it only shows
 > the steps. You enable the server and set the password yourself.
