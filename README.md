@@ -106,6 +106,25 @@ already has the seam for it.
 
 ---
 
+## Gaming / high frame rate — use Moonlight + Sunshine, not VNC
+
+DeskBridge (VNC) is built for **desktop control** — files, admin, coding. VNC's
+protocol sends changed pixel regions on demand, so it cannot deliver smooth,
+locked 60 fps, and it is the wrong tool for games or full-motion video.
+
+For 60 fps low-latency streaming (e.g. playing Windows games on the Mac), use a
+hardware-encoded video protocol instead:
+
+- **Sunshine** on the Windows PC (host) — captures and GPU-encodes the screen.
+  Install from https://github.com/LizardByte/Sunshine/releases.
+- **Moonlight** on the Mac (client) — `brew install --cask moonlight`. Pair with
+  the PIN Sunshine shows, then stream at 60 fps / HEVC.
+
+Moonlight also captures the mouse properly (relative mode for games), so it does
+not have VNC's cursor-offset issues. Keep the host wired for the lowest latency.
+
+---
+
 ## Troubleshooting
 
 | Symptom | Fix |
