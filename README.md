@@ -4,10 +4,14 @@ Two-way remote desktop between a Mac and a Windows PC. DeskBridge is the
 connection manager; the actual screen sharing is done by each OS's VNC server
 and the native VNC viewer.
 
-## Run
+## Install & run
 
     cd remote
-    python -m deskbridge.app
+    pip install -e .
+    deskbridge          # or: python -m deskbridge.app
+
+`pip install -e .` makes the `deskbridge` package importable and installs the
+`deskbridge` command. Requires Python 3.10+; no third-party runtime dependencies.
 
 ## One-time setup per machine (host role)
 

@@ -1,8 +1,18 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "deskbridge"
 version = "0.1.0"
 description = "Two-way Mac/Windows remote desktop via VNC + native viewers"
 requires-python = ">=3.10"
+
+[project.scripts]
+deskbridge = "deskbridge.app:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
