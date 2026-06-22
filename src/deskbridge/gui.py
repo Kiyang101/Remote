@@ -9,6 +9,7 @@ from deskbridge.connections import (
     load_connections,
     save_connections,
 )
+from deskbridge.localip import local_ip
 from deskbridge.net import is_port_open, resolve_address
 from deskbridge.platform_detect import current_os
 from deskbridge.viewer_launch import launch_viewer
@@ -20,12 +21,15 @@ class DeskBridgeApp:
         self.root = root
         self.config_path = config_path
         self.os_name = current_os()
+        self.local_ip = local_ip() or "unavailable"
         self.connections = load_connections(config_path)
 
         root.title("DeskBridge")
         root.geometry("420x360")
 
-        tk.Label(root, text=f"This machine: {self.os_name}").pack(anchor="w", padx=8, pady=4)
+        tk.Label(
+            root, text=f"This machine: {self.os_name} · IP: {self.local_ip}"
+        ).pack(anchor="w", padx=8, pady=4)
 
         self.listbox = tk.Listbox(root)
         self.listbox.pack(fill="both", expand=True, padx=8, pady=4)
@@ -91,5 +95,6 @@ class DeskBridgeApp:
     def share_screen(self):
         running = is_server_running()
         steps = setup_instructions(self.os_name)
+        address_line = f"Other machines connect to this machine at: {self.local_ip}\n\n"
         prefix = "VNC server appears to be running.\n\n" if running else ""
-        messagebox.showinfo("Share my screen", prefix + steps)
+        messagebox.showinfo("Share my screen", address_line + prefix + steps)
